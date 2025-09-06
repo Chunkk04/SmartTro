@@ -1,11 +1,146 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Trọ</title>
-</head>
-<body>
-    <h1>Welcome to Smart Trọ</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Trọ — Đăng nhập</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="card" role="main" aria-labelledby="login-title">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">ST</div>
+          <div>
+            <h1 id="login-title">Smart Trọ</h1>         
+          </div>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="identifier">Email hoặc Số điện thoại</label>
+            <input
+              id="identifier"
+              name="identifier"
+              type="text"
+              inputmode="email"           
+              required
+              aria-required="true"
+            />
+            <div
+              id="identifierError"
+              class="error"
+              aria-live="polite"
+              style="display: none"
+            ></div>
+          </div>
+
+          <div class="field password-wrap">
+            <label for="password">Mật khẩu</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              aria-required="true"
+            />
+            <button
+              type="button"
+              class="toggle-pass"
+              id="togglePass"
+              aria-label="Hiển thị mật khẩu"
+            >
+              Hiện
+            </button>
+            <div
+              id="passwordError"
+              class="error"
+              aria-live="polite"
+              style="display: none"
+            ></div>
+          </div>
+
+          <div class="actions">
+            <label class="remember"
+              ><input id="remember" name="remember" type="checkbox" /> Ghi nhớ
+              đăng nhập</label
+            >
+            <a class="small" href="#">Quên mật khẩu?</a>
+          </div>
+
+          <button class="btn" type="submit">Đăng nhập</button>
+
+          <div class="or">
+            <hr />
+            <span class="hint">hoặc</span>
+            <hr />
+          </div>
+
+          <div class="links">
+            <a class="small" href="#">Đăng ký tài khoản</a>
+            <a class="small" href="#">Xem trang chủ</a>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <script>
+      // Basic client-side validation and UI helpers
+      (function () {
+        const form = document.getElementById("loginForm");
+        const idInput = document.getElementById("identifier");
+        const passInput = document.getElementById("password");
+        const idErr = document.getElementById("identifierError");
+        const passErr = document.getElementById("passwordError");
+        const toggle = document.getElementById("togglePass");
+
+        toggle.addEventListener("click", () => {
+          const shown = passInput.type === "text";
+          passInput.type = shown ? "password" : "text";
+          toggle.textContent = shown ? "Hiện" : "Ẩn";
+          toggle.setAttribute("aria-pressed", String(!shown));
+        });
+
+        function validate() {
+          let ok = true;
+          idErr.style.display = "none";
+          passErr.style.display = "none";
+
+          const idVal = idInput.value.trim();
+          if (!idVal) {
+            idErr.textContent = "Vui lòng nhập email hoặc số điện thoại.";
+            idErr.style.display = "block";
+            ok = false;
+          }
+
+          const passVal = passInput.value;
+          if (!passVal) {
+            passErr.textContent = "Vui lòng nhập mật khẩu.";
+            passErr.style.display = "block";
+            ok = false;
+          } else if (passVal.length < 6) {
+            passErr.textContent = "Mật khẩu phải có ít nhất 6 ký tự.";
+            passErr.style.display = "block";
+            ok = false;
+          }
+
+          return ok;
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!validate()) return;
+
+          // Demo: hiển thị alert tạm thời. Thay bằng gọi API khi backend có sẵn.
+          const data = {
+            identifier: idInput.value.trim(),
+            password: passInput.value,
+            remember: document.getElementById("remember").checked,
+          };
+          // Replace this with real authentication request
+          alert("Đã gửi yêu cầu đăng nhập (demo): " + JSON.stringify(data));
+        });
+      })();
+    </script>
+  </body>
 </html>
