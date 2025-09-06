@@ -107,10 +107,125 @@
           </div>
 
           <div class="links">
-            <a class="small" href="#">Đăng ký tài khoản</a>
+            <a class="small" href="#" id="registerLink">Đăng ký tài khoản</a>
             <a class="small" href="#">Xem trang chủ</a>
           </div>
         </form>
+
+        <!-- Registration modal -->
+        <div class="modal-overlay hidden" id="registerModal" aria-hidden="true">
+          <div
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="regTitle"
+          >
+            <div class="modal-header">
+              <h2 id="regTitle">Đăng ký tài khoản</h2>
+              <button class="close-btn" id="closeReg" aria-label="Đóng">
+                ×
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="registerForm" novalidate>
+                <div class="field">
+                  <label for="regName">Họ và tên</label>
+                  <input
+                    id="regName"
+                    name="name"
+                    type="text"
+                    required
+                    placeholder="Nguyễn Văn A"
+                  />
+                  <div
+                    class="error"
+                    id="regNameError"
+                    style="display: none"
+                  ></div>
+                </div>
+
+                <div class="field">
+                  <label for="regEmail">Email</label>
+                  <input
+                    id="regEmail"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                  />
+                  <div
+                    class="error"
+                    id="regEmailError"
+                    style="display: none"
+                  ></div>
+                </div>
+
+                <div class="field">
+                  <label for="regPhone">Số điện thoại</label>
+                  <input
+                    id="regPhone"
+                    name="phone"
+                    type="text"
+                    inputmode="tel"
+                    placeholder="0912345678"
+                  />
+                  <div
+                    class="error"
+                    id="regPhoneError"
+                    style="display: none"
+                  ></div>
+                </div>
+
+                <div class="field password-wrap">
+                  <label for="regPassword">Mật khẩu</label>
+                  <input
+                    id="regPassword"
+                    name="password"
+                    type="password"
+                    required
+                    placeholder="Tối thiểu 6 ký tự"
+                  />
+                </div>
+
+                <div class="field password-wrap">
+                  <label for="regPassword2">Nhập lại mật khẩu</label>
+                  <input
+                    id="regPassword2"
+                    name="password2"
+                    type="password"
+                    required
+                  />
+                  <div
+                    class="error"
+                    id="regPasswordError"
+                    style="display: none"
+                  ></div>
+                </div>
+
+                <div class="actions">
+                  <label class="remember"
+                    ><input id="regTerms" name="terms" type="checkbox" /> Tôi
+                    đồng ý với điều khoản</label
+                  >
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn" id="submitReg">
+                    Đăng ký
+                  </button>
+                  <button
+                    type="button"
+                    class="btn"
+                    id="cancelReg"
+                    style="background: #f3f4f6; color: #111; margin-left: 8px"
+                  >
+                    Hủy
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
 
@@ -182,6 +297,100 @@
           };
           // Replace this with real authentication request
           alert("Đã gửi yêu cầu đăng nhập (demo): " + JSON.stringify(data));
+        });
+
+        // --- Registration modal logic ---
+        const registerLink = document.getElementById("registerLink");
+        const registerModal = document.getElementById("registerModal");
+        const closeReg = document.getElementById("closeReg");
+        const cancelReg = document.getElementById("cancelReg");
+        const submitReg = document.getElementById("submitReg");
+        const registerForm = document.getElementById("registerForm");
+
+        function openModal() {
+          registerModal.classList.remove("hidden");
+          registerModal.setAttribute("aria-hidden", "false");
+        }
+        function closeModal() {
+          registerModal.classList.add("hidden");
+          registerModal.setAttribute("aria-hidden", "true");
+        }
+
+        registerLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          openModal();
+        });
+        closeReg.addEventListener("click", closeModal);
+        cancelReg.addEventListener("click", closeModal);
+        registerModal.addEventListener("click", function (e) {
+          if (e.target === registerModal) closeModal();
+        });
+
+        function validateRegister() {
+          let ok = true;
+          const name = document.getElementById("regName");
+          const email = document.getElementById("regEmail");
+          const phone = document.getElementById("regPhone");
+          const p1 = document.getElementById("regPassword");
+          const p2 = document.getElementById("regPassword2");
+
+          // clear errors
+          [
+            "regNameError",
+            "regEmailError",
+            "regPhoneError",
+            "regPasswordError",
+          ].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) {
+              el.style.display = "none";
+              el.textContent = "";
+            }
+          });
+
+          if (!name.value.trim()) {
+            document.getElementById("regNameError").textContent =
+              "Vui lòng nhập họ tên.";
+            document.getElementById("regNameError").style.display = "block";
+            ok = false;
+          }
+          if (!email.value.trim()) {
+            document.getElementById("regEmailError").textContent =
+              "Vui lòng nhập email.";
+            document.getElementById("regEmailError").style.display = "block";
+            ok = false;
+          }
+          if (p1.value.length < 6) {
+            document.getElementById("regPasswordError").textContent =
+              "Mật khẩu phải có ít nhất 6 ký tự.";
+            document.getElementById("regPasswordError").style.display = "block";
+            ok = false;
+          }
+          if (p1.value !== p2.value) {
+            document.getElementById("regPasswordError").textContent =
+              "Mật khẩu không khớp.";
+            document.getElementById("regPasswordError").style.display = "block";
+            ok = false;
+          }
+          if (!document.getElementById("regTerms").checked) {
+            document.getElementById("regPasswordError").textContent =
+              "Bạn phải đồng ý với điều khoản.";
+            document.getElementById("regPasswordError").style.display = "block";
+            ok = false;
+          }
+
+          return ok;
+        }
+
+        submitReg.addEventListener("click", function () {
+          if (!validateRegister()) return;
+          const payload = {
+            name: document.getElementById("regName").value.trim(),
+            email: document.getElementById("regEmail").value.trim(),
+            phone: document.getElementById("regPhone").value.trim(),
+          };
+          alert("Đăng ký demo: " + JSON.stringify(payload));
+          closeModal();
         });
       })();
     </script>

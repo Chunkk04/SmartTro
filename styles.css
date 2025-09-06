@@ -171,3 +171,50 @@ a.small {
     border-radius: 10px;
   }
 }
+
+/* Modal (register) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.45);
+  z-index: 60;
+  padding: 20px;
+}
+.modal {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.25);
+  padding: 18px;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.close-btn {
+  background: none;
+  border: 0;
+  font-size: 22px;
+  cursor: pointer;
+}
+.modal-body {
+  max-height: 70vh;
+  overflow: auto;
+  padding-top: 6px;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
