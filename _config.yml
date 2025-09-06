@@ -1,0 +1,39 @@
+# GitHub Pages Configuration
+title: RoomStay - Hệ thống quản lý phòng trọ
+description: Hệ thống quản lý phòng trọ thông minh với giao diện hiện đại
+baseurl: ""
+url: "https://chunkk04.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Exclude files
+exclude:
+  - README.md
+  - .gitignore
+  - _config.yml
+
+# Include files
+include:
+  - _redirects
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
