@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Trọ - Đăng Ký</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- Header/Brand Section -->
+            <div class="brand">
+                <div class="logo">🏠</div>
+                <div class="brand-text">
+                    <h1>Quản Lý Phòng Trọ</h1>
+                    <p class="lead">Tạo Tài Khoản Mới</p>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="registerForm" class="form">
+                <div class="field">
+                    <label for="username">Tên người dùng</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        placeholder="Nhập tên người dùng"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="Nhập email của bạn"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="password">Mật khẩu</label>
+                    <div class="password-hint">Tối thiểu 6 ký tự</div>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Tối thiểu 6 ký tự"
+                        required
+                        minlength="6"
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="confirmPassword">Xác nhận mật khẩu</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        placeholder="Nhập lại mật khẩu"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary">Đăng Ký</button>
+            </form>
+
+            <!-- Login Link -->
+            <div class="form-footer">
+                <p>Bạn đã có tài khoản? <a href="index.html" class="link">Đăng nhập</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form validation and submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validation
+            if (!username || !email || !password || !confirmPassword) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Mật khẩu phải có ít nhất 6 ký tự!');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Mật khẩu xác nhận không khớp!');
+                return;
+            }
+            
+            // Simulate registration process
+            const btn = document.querySelector('.btn-primary');
+            btn.textContent = 'Đang đăng ký...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Đăng ký thành công! Chuyển đến trang đăng nhập...');
+                window.location.href = 'index.html';
+            }, 1500);
+        });
+
+        // Real-time password confirmation validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#ef4444';
+            } else {
+                this.style.borderColor = '#e5e7eb';
+            }
+        });
+    </script>
+</body>
+</html>
