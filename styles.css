@@ -147,7 +147,22 @@ a.small {
   border: 0;
   color: var(--muted);
   cursor: pointer;
-  font-size: 13px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-pass:focus {
+  outline: 2px solid rgba(43, 110, 246, 0.18);
+  border-radius: 6px;
+}
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+.hidden {
+  display: none;
 }
 
 @media (max-width: 480px) {
