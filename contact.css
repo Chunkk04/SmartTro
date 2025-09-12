@@ -1,0 +1,187 @@
+/* Contact Page Specific Styles */
+
+/* Contact Section */
+.contact-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    position: relative;
+}
+
+/* Brand text styling - đổi màu đen */
+.contact-section .brand-text h1 {
+    color: #000000 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    background-clip: unset !important;
+    font-size: var(--font-size-3xl);
+    font-weight: 800;
+    margin-bottom: var(--space-sm);
+    line-height: 1.2;
+}
+
+.contact-section .brand-text .lead {
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Override container for contact page */
+.contact-section .container {
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    position: relative;
+}
+
+/* Contact form specific styling */
+.contact-section .card {
+    width: 100%;
+    max-width: 500px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-2xl);
+    padding: var(--space-2xl) var(--space-xl);
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.6s ease-out;
+}
+
+/* Improved input and textarea styling */
+.contact-section input[type="text"],
+.contact-section input[type="tel"],
+.contact-section textarea {
+    width: 100%;
+    padding: var(--space-md) var(--space-lg);
+    border: 2px solid #e5e7eb;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    background: #ffffff;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.contact-section input[type="text"]:focus,
+.contact-section input[type="tel"]:focus,
+.contact-section textarea:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.contact-section input[type="text"]:hover,
+.contact-section input[type="tel"]:hover,
+.contact-section textarea:hover {
+    border-color: #d1d5db;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-section input[type="text"]::placeholder,
+.contact-section input[type="tel"]::placeholder,
+.contact-section textarea::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Textarea specific */
+.contact-section textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+/* Button text styling */
+.btn-text {
+    position: relative;
+    z-index: 1;
+}
+
+/* Form footer styling */
+.form-footer {
+    text-align: center;
+    margin-top: var(--space-lg);
+}
+
+.form-footer p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    margin: 0;
+    background: rgba(255, 255, 255, 0.8);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: inline-block;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .contact-section .container {
+        padding: var(--space-md);
+    }
+    
+    .contact-section .card {
+        padding: var(--space-xl) var(--space-lg);
+        max-width: 100%;
+    }
+    
+    .brand {
+        margin-bottom: var(--space-xl);
+    }
+    
+    .brand-text h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .brand-text .lead {
+        font-size: var(--font-size-base);
+    }
+    
+    .form-title {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--space-xl);
+    }
+    
+    input[type="text"],
+    input[type="tel"],
+    textarea {
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--font-size-base);
+    }
+    
+    .btn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--font-size-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-section .container {
+        padding: var(--space-sm);
+    }
+    
+    .contact-section .card {
+        padding: var(--space-lg) var(--space-md);
+    }
+    
+    .brand-text h1 {
+        font-size: var(--font-size-xl);
+    }
+    
+    .brand-text .lead {
+        font-size: var(--font-size-sm);
+    }
+}

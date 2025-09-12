@@ -1,0 +1,49 @@
+/* Rent Page Specific Styles */
+
+/* Override card-icon colors for property cards */
+.feature-card .card-icon.orange {
+    background: #f97316 !important;
+}
+
+.feature-card .card-icon.blue {
+    background: #3b82f6 !important;
+}
+
+.feature-card .card-icon.green {
+    background: #10b981 !important;
+}
+
+/* Property card specific styling */
+.feature-card h4 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.feature-card .card-description {
+    text-align: left;
+    line-height: 1.6;
+}
+
+.feature-card .card-description strong {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+/* Contact button styling */
+.feature-card .btn-primary {
+    width: 100%;
+    margin-top: var(--space-md);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .feature-card .card-description {
+        font-size: var(--font-size-sm);
+    }
+    
+    .feature-card h4 {
+        font-size: var(--font-size-base);
+    }
+}
