@@ -111,68 +111,40 @@
             btn.textContent = 'Đang đăng ký...';
             btn.disabled = true;
             
-            try {
-                const response = await fetch('/api/auth/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        fullName: fullName,
-                        email: email,
-                        password: password,
-                        confirmPassword: confirmPassword
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok && data.success) {
-                    alert('Đăng ký thành công! Chuyển đến trang đăng nhập...');
-                    window.location.href = 'login.html';
-                } else {
-                    alert(data.message || 'Đăng ký thất bại!');
-                }
-            } catch (error) {
-                console.error('Register error:', error);
-                
-                // Fallback: Nếu server chưa chạy (GitHub Pages), lưu thông tin demo và chuyển đến login
-                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError') || error.message.includes('CORS')) {
-                    console.log('GitHub Pages mode - Server không có sẵn, lưu thông tin demo');
-                    
-                    // Lưu thông tin đăng ký vào localStorage
-                    const registrationData = {
-                        fullName: fullName,
-                        email: email,
-                        phone: '0123456789', // Default phone for demo
-                        password: password, // Lưu password để validate
-                        registeredAt: new Date().toISOString()
-                    };
-                    
-                    // Lưu vào danh sách tài khoản đã đăng ký
-                    const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
-                    const existingAccount = registeredAccounts.find(acc => acc.email === email);
-                    
-                    if (existingAccount) {
-                        alert('Email này đã được đăng ký! Vui lòng sử dụng email khác hoặc đăng nhập.');
-                        return;
-                    }
-                    
-                    registeredAccounts.push(registrationData);
-                    localStorage.setItem('registeredAccounts', JSON.stringify(registeredAccounts));
-                    
-                    // Cũng lưu vào pendingRegistration để tương thích với login
-                    localStorage.setItem('pendingRegistration', JSON.stringify(registrationData));
-                    
-                    alert('Đăng ký thành công! (Demo mode - Server chưa chạy)');
-                    window.location.href = 'login.html';
-                } else {
-                    alert('Có lỗi xảy ra khi đăng ký. Vui lòng thử lại!');
-                }
-            } finally {
+            // Luôn chạy demo mode cho GitHub Pages
+            console.log('Demo mode - Lưu thông tin đăng ký vào localStorage');
+            
+            // Lưu thông tin đăng ký vào localStorage
+            const registrationData = {
+                fullName: fullName,
+                email: email,
+                phone: '0123456789', // Default phone for demo
+                password: password, // Lưu password để validate
+                registeredAt: new Date().toISOString()
+            };
+            
+            // Lưu vào danh sách tài khoản đã đăng ký
+            const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
+            const existingAccount = registeredAccounts.find(acc => acc.email === email);
+            
+            if (existingAccount) {
+                alert('Email này đã được đăng ký! Vui lòng sử dụng email khác hoặc đăng nhập.');
                 btn.textContent = originalText;
                 btn.disabled = false;
+                return;
             }
+            
+            registeredAccounts.push(registrationData);
+            localStorage.setItem('registeredAccounts', JSON.stringify(registeredAccounts));
+            
+            // Cũng lưu vào pendingRegistration để tương thích với login
+            localStorage.setItem('pendingRegistration', JSON.stringify(registrationData));
+            
+            alert('Đăng ký thành công! (Demo mode)');
+            window.location.href = 'login.html';
+            
+            btn.textContent = originalText;
+            btn.disabled = false;
         });
 
         // Real-time password confirmation validation

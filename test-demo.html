@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Demo Mode - RoomStay</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-section h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Demo Mode - RoomStay</h1>
+        
+        <div class="test-section">
+            <h3>📊 Kiểm tra localStorage</h3>
+            <button class="btn" onclick="checkLocalStorage()">Kiểm tra dữ liệu</button>
+            <button class="btn btn-danger" onclick="clearAllData()">Xóa tất cả dữ liệu</button>
+            <div id="localStorageResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>👤 Test đăng ký tài khoản</h3>
+            <button class="btn" onclick="testRegister()">Tạo tài khoản test</button>
+            <div id="registerResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Test đăng nhập</h3>
+            <button class="btn" onclick="testLogin()">Test đăng nhập</button>
+            <div id="loginResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🏠 Test chuyển trang</h3>
+            <button class="btn" onclick="goToHome()">Vào trang chủ</button>
+            <button class="btn" onclick="goToLogin()">Vào trang đăng nhập</button>
+            <button class="btn" onclick="goToRegister()">Vào trang đăng ký</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📱 Test responsive</h3>
+            <p>Thay đổi kích thước cửa sổ để test responsive design</p>
+            <div id="screenSize" class="result info"></div>
+        </div>
+    </div>
+
+    <script>
+        // Kiểm tra localStorage
+        function checkLocalStorage() {
+            const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
+            const pendingRegistration = localStorage.getItem('pendingRegistration');
+            const authToken = localStorage.getItem('authToken');
+            const userInfo = localStorage.getItem('userInfo');
+            
+            let result = '📊 Dữ liệu localStorage:\n\n';
+            result += `👥 Tài khoản đã đăng ký: ${registeredAccounts.length}\n`;
+            result += `⏳ Đăng ký tạm thời: ${pendingRegistration ? 'Có' : 'Không'}\n`;
+            result += `🔑 Token: ${authToken ? 'Có' : 'Không'}\n`;
+            result += `👤 User info: ${userInfo ? 'Có' : 'Không'}\n\n`;
+            
+            if (registeredAccounts.length > 0) {
+                result += '📋 Danh sách tài khoản:\n';
+                registeredAccounts.forEach((acc, index) => {
+                    result += `${index + 1}. ${acc.fullName} (${acc.email})\n`;
+                });
+            }
+            
+            if (userInfo) {
+                const user = JSON.parse(userInfo);
+                result += `\n👤 User hiện tại: ${user.fullName} (${user.email})`;
+            }
+            
+            document.getElementById('localStorageResult').textContent = result;
+            document.getElementById('localStorageResult').className = 'result info';
+        }
+
+        // Xóa tất cả dữ liệu
+        function clearAllData() {
+            localStorage.removeItem('registeredAccounts');
+            localStorage.removeItem('pendingRegistration');
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userInfo');
+            
+            document.getElementById('localStorageResult').textContent = '✅ Đã xóa tất cả dữ liệu!';
+            document.getElementById('localStorageResult').className = 'result success';
+        }
+
+        // Test đăng ký
+        function testRegister() {
+            const testAccount = {
+                fullName: 'Nguyễn Văn Test',
+                email: 'test@example.com',
+                phone: '0123456789',
+                password: '123456',
+                registeredAt: new Date().toISOString()
+            };
+            
+            const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
+            const existingAccount = registeredAccounts.find(acc => acc.email === testAccount.email);
+            
+            if (existingAccount) {
+                document.getElementById('registerResult').textContent = '⚠️ Tài khoản test đã tồn tại!';
+                document.getElementById('registerResult').className = 'result error';
+            } else {
+                registeredAccounts.push(testAccount);
+                localStorage.setItem('registeredAccounts', JSON.stringify(registeredAccounts));
+                localStorage.setItem('pendingRegistration', JSON.stringify(testAccount));
+                
+                document.getElementById('registerResult').textContent = '✅ Đã tạo tài khoản test thành công!\n\n' + JSON.stringify(testAccount, null, 2);
+                document.getElementById('registerResult').className = 'result success';
+            }
+        }
+
+        // Test đăng nhập
+        function testLogin() {
+            const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
+            
+            if (registeredAccounts.length === 0) {
+                document.getElementById('loginResult').textContent = '❌ Không có tài khoản nào để test! Vui lòng tạo tài khoản test trước.';
+                document.getElementById('loginResult').className = 'result error';
+                return;
+            }
+            
+            const testAccount = registeredAccounts[0];
+            const demoUser = {
+                id: 'demo_user_123',
+                fullName: testAccount.fullName,
+                email: testAccount.email,
+                phone: testAccount.phone,
+                role: 'tenant',
+                isVerified: true,
+                createdAt: testAccount.registeredAt
+            };
+            
+            const demoToken = 'demo_token_' + Date.now();
+            
+            localStorage.setItem('authToken', demoToken);
+            localStorage.setItem('userInfo', JSON.stringify(demoUser));
+            
+            document.getElementById('loginResult').textContent = '✅ Đăng nhập thành công!\n\n' + JSON.stringify(demoUser, null, 2);
+            document.getElementById('loginResult').className = 'result success';
+        }
+
+        // Chuyển trang
+        function goToHome() {
+            window.location.href = 'home.html';
+        }
+
+        function goToLogin() {
+            window.location.href = 'login.html';
+        }
+
+        function goToRegister() {
+            window.location.href = 'register.html';
+        }
+
+        // Kiểm tra kích thước màn hình
+        function updateScreenSize() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            let device = '';
+            
+            if (width < 480) {
+                device = 'Mobile (nhỏ)';
+            } else if (width < 768) {
+                device = 'Mobile (lớn)';
+            } else if (width < 1024) {
+                device = 'Tablet';
+            } else {
+                device = 'Desktop';
+            }
+            
+            document.getElementById('screenSize').textContent = 
+                `📱 Kích thước: ${width}x${height}\n🖥️ Thiết bị: ${device}`;
+        }
+
+        // Khởi tạo
+        window.addEventListener('load', function() {
+            checkLocalStorage();
+            updateScreenSize();
+        });
+
+        window.addEventListener('resize', updateScreenSize);
+    </script>
+</body>
+</html>
