@@ -147,9 +147,9 @@
             } catch (error) {
                 console.error('Login error:', error);
                 
-                // Fallback: Nếu server chưa chạy, kiểm tra đăng ký trước
-                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-                    console.log('Server chưa chạy, kiểm tra đăng ký demo');
+                // Fallback: Nếu server chưa chạy (GitHub Pages), kiểm tra đăng ký trước
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError') || error.message.includes('CORS')) {
+                    console.log('GitHub Pages mode - Server không có sẵn, sử dụng demo mode');
                     
                     // Kiểm tra tài khoản đã đăng ký
                     const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');

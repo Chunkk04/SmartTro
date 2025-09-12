@@ -136,9 +136,9 @@
             } catch (error) {
                 console.error('Register error:', error);
                 
-                // Fallback: Nếu server chưa chạy, lưu thông tin demo và chuyển đến login
-                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-                    console.log('Server chưa chạy, lưu thông tin demo');
+                // Fallback: Nếu server chưa chạy (GitHub Pages), lưu thông tin demo và chuyển đến login
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError') || error.message.includes('CORS')) {
+                    console.log('GitHub Pages mode - Server không có sẵn, lưu thông tin demo');
                     
                     // Lưu thông tin đăng ký vào localStorage
                     const registrationData = {
