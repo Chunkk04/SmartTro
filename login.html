@@ -102,7 +102,7 @@
         showRegisteredAccounts();
         
         // Form validation and submission
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const emailOrPhone = document.getElementById('email').value;
@@ -118,91 +118,97 @@
             btn.textContent = 'Đang đăng nhập...';
             btn.disabled = true;
             
-            // Luôn chạy demo mode cho GitHub Pages
+            // Demo mode - Kiểm tra đăng ký trong localStorage
             console.log('Demo mode - Kiểm tra đăng ký trong localStorage');
             
-            // Kiểm tra tài khoản đã đăng ký
-            const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
-            const pendingRegistration = localStorage.getItem('pendingRegistration');
-            
-            let regData = null;
-            
-            // Ưu tiên kiểm tra tài khoản đã đăng ký trước
-            if (registeredAccounts.length > 0) {
-                regData = registeredAccounts.find(acc => 
-                    (emailOrPhone.includes('@') && acc.email === emailOrPhone) ||
-                    (!emailOrPhone.includes('@') && acc.phone === emailOrPhone)
-                );
-            }
-            
-            // Nếu không tìm thấy, kiểm tra đăng ký tạm thời
-            if (!regData && pendingRegistration) {
-                regData = JSON.parse(pendingRegistration);
-                const isEmailMatch = emailOrPhone.includes('@') && regData.email === emailOrPhone;
-                const isPhoneMatch = !emailOrPhone.includes('@') && regData.phone === emailOrPhone;
+            try {
+                // Kiểm tra tài khoản đã đăng ký
+                const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
+                const pendingRegistration = localStorage.getItem('pendingRegistration');
                 
-                if (!isEmailMatch && !isPhoneMatch) {
-                    regData = null;
+                let regData = null;
+                
+                // Ưu tiên kiểm tra tài khoản đã đăng ký trước
+                if (registeredAccounts.length > 0) {
+                    regData = registeredAccounts.find(acc => 
+                        (emailOrPhone.includes('@') && acc.email === emailOrPhone) ||
+                        (!emailOrPhone.includes('@') && acc.phone === emailOrPhone)
+                    );
                 }
-            }
-            
-            // Nếu không tìm thấy tài khoản nào
-            if (!regData) {
-                alert('Tài khoản chưa được đăng ký!\n\nVui lòng đăng ký tài khoản trước khi đăng nhập.\n\nChuyển đến trang đăng ký...');
-                window.location.href = 'register.html';
-                btn.textContent = originalText;
-                btn.disabled = false;
-                return;
-            }
-            
-            // Kiểm tra password có khớp không
-            if (regData.password !== password) {
-                alert('Mật khẩu không chính xác!\n\nVui lòng kiểm tra lại mật khẩu.');
-                btn.textContent = originalText;
-                btn.disabled = false;
-                return;
-            }
-            
-            // Tạo demo user data từ thông tin đăng ký
-            const demoUser = {
-                id: 'demo_user_123',
-                fullName: regData.fullName,
-                email: regData.email,
-                phone: regData.phone,
-                role: 'tenant',
-                isVerified: true,
-                createdAt: regData.registeredAt
-            };
-            
-            // Lưu tài khoản vào danh sách tài khoản đã đăng ký (không xóa)
-            const savedAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
-            const existingAccount = savedAccounts.find(acc => acc.email === regData.email);
-            
-            if (!existingAccount) {
-                savedAccounts.push({
+                
+                // Nếu không tìm thấy, kiểm tra đăng ký tạm thời
+                if (!regData && pendingRegistration) {
+                    regData = JSON.parse(pendingRegistration);
+                    const isEmailMatch = emailOrPhone.includes('@') && regData.email === emailOrPhone;
+                    const isPhoneMatch = !emailOrPhone.includes('@') && regData.phone === emailOrPhone;
+                    
+                    if (!isEmailMatch && !isPhoneMatch) {
+                        regData = null;
+                    }
+                }
+                
+                // Nếu không tìm thấy tài khoản nào
+                if (!regData) {
+                    alert('Tài khoản chưa được đăng ký!\n\nVui lòng đăng ký tài khoản trước khi đăng nhập.\n\nChuyển đến trang đăng ký...');
+                    window.location.href = 'register.html';
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+                
+                // Kiểm tra password có khớp không
+                if (regData.password !== password) {
+                    alert('Mật khẩu không chính xác!\n\nVui lòng kiểm tra lại mật khẩu.');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+                
+                // Tạo demo user data từ thông tin đăng ký
+                const demoUser = {
+                    id: 'demo_user_123',
                     fullName: regData.fullName,
                     email: regData.email,
                     phone: regData.phone,
-                    password: regData.password,
-                    registeredAt: regData.registeredAt
-                });
-                localStorage.setItem('registeredAccounts', JSON.stringify(savedAccounts));
+                    role: 'tenant',
+                    isVerified: true,
+                    createdAt: regData.registeredAt
+                };
+                
+                // Lưu tài khoản vào danh sách tài khoản đã đăng ký (không xóa)
+                const savedAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
+                const existingAccount = savedAccounts.find(acc => acc.email === regData.email);
+                
+                if (!existingAccount) {
+                    savedAccounts.push({
+                        fullName: regData.fullName,
+                        email: regData.email,
+                        phone: regData.phone,
+                        password: regData.password,
+                        registeredAt: regData.registeredAt
+                    });
+                    localStorage.setItem('registeredAccounts', JSON.stringify(savedAccounts));
+                }
+                
+                // Xóa thông tin đăng ký tạm thời
+                localStorage.removeItem('pendingRegistration');
+                
+                const demoToken = 'demo_token_' + Date.now();
+                
+                // Store demo data
+                localStorage.setItem('authToken', demoToken);
+                localStorage.setItem('userInfo', JSON.stringify(demoUser));
+                
+                alert('Đăng nhập thành công! (Demo mode)');
+                window.location.href = 'home.html';
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại!');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
             }
-            
-            // Xóa thông tin đăng ký tạm thời
-            localStorage.removeItem('pendingRegistration');
-            
-            const demoToken = 'demo_token_' + Date.now();
-            
-            // Store demo data
-            localStorage.setItem('authToken', demoToken);
-            localStorage.setItem('userInfo', JSON.stringify(demoUser));
-            
-            alert('Đăng nhập thành công! (Demo mode)');
-            window.location.href = 'home.html';
-            
-            btn.textContent = originalText;
-            btn.disabled = false;
         });
     </script>
 </body>

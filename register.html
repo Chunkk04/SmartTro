@@ -82,7 +82,7 @@
 
     <script>
         // Form validation and submission
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const fullName = document.getElementById('username').value;
@@ -111,40 +111,46 @@
             btn.textContent = 'Đang đăng ký...';
             btn.disabled = true;
             
-            // Luôn chạy demo mode cho GitHub Pages
+            // Demo mode - Lưu thông tin đăng ký vào localStorage
             console.log('Demo mode - Lưu thông tin đăng ký vào localStorage');
             
-            // Lưu thông tin đăng ký vào localStorage
-            const registrationData = {
-                fullName: fullName,
-                email: email,
-                phone: '0123456789', // Default phone for demo
-                password: password, // Lưu password để validate
-                registeredAt: new Date().toISOString()
-            };
-            
-            // Lưu vào danh sách tài khoản đã đăng ký
-            const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
-            const existingAccount = registeredAccounts.find(acc => acc.email === email);
-            
-            if (existingAccount) {
-                alert('Email này đã được đăng ký! Vui lòng sử dụng email khác hoặc đăng nhập.');
+            try {
+                // Lưu thông tin đăng ký vào localStorage
+                const registrationData = {
+                    fullName: fullName,
+                    email: email,
+                    phone: '0123456789', // Default phone for demo
+                    password: password, // Lưu password để validate
+                    registeredAt: new Date().toISOString()
+                };
+                
+                // Lưu vào danh sách tài khoản đã đăng ký
+                const registeredAccounts = JSON.parse(localStorage.getItem('registeredAccounts') || '[]');
+                const existingAccount = registeredAccounts.find(acc => acc.email === email);
+                
+                if (existingAccount) {
+                    alert('Email này đã được đăng ký! Vui lòng sử dụng email khác hoặc đăng nhập.');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+                
+                registeredAccounts.push(registrationData);
+                localStorage.setItem('registeredAccounts', JSON.stringify(registeredAccounts));
+                
+                // Cũng lưu vào pendingRegistration để tương thích với login
+                localStorage.setItem('pendingRegistration', JSON.stringify(registrationData));
+                
+                alert('Đăng ký thành công! (Demo mode)');
+                window.location.href = 'login.html';
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('Có lỗi xảy ra khi đăng ký. Vui lòng thử lại!');
+            } finally {
                 btn.textContent = originalText;
                 btn.disabled = false;
-                return;
             }
-            
-            registeredAccounts.push(registrationData);
-            localStorage.setItem('registeredAccounts', JSON.stringify(registeredAccounts));
-            
-            // Cũng lưu vào pendingRegistration để tương thích với login
-            localStorage.setItem('pendingRegistration', JSON.stringify(registrationData));
-            
-            alert('Đăng ký thành công! (Demo mode)');
-            window.location.href = 'login.html';
-            
-            btn.textContent = originalText;
-            btn.disabled = false;
         });
 
         // Real-time password confirmation validation
