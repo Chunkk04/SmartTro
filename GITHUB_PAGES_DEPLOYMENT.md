@@ -93,8 +93,7 @@ Password: 123456
 ├── home.html
 ├── login.html
 ├── register.html
-├── rent.html
-├── contact.html
+├── ├── contact.html
 ├── profile.html
 ├── styles.css
 ├── rent.css

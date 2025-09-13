@@ -27,8 +27,11 @@
                 <nav class="nav">
                     <ul class="nav-list">
                         <li><a href="home.html" class="nav-link">Trang chủ</a></li>
-                        <li><a href="rent.html" class="nav-link">Nhà cho thuê</a></li>
                         <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
+                        <li><button class="nav-link search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                            Tìm kiếm
+                        </button></li>
                     </ul>
                 </nav>
 
@@ -52,7 +55,7 @@
                                 <div class="user-dropdown" id="userDropdown">
                                     <a href="profile.html" class="dropdown-item active">
                                         <i class="fas fa-user"></i>
-                                        Hồ sơ cá nhân
+                                        Tài khoản
                                     </a>
                                     <a href="#" class="dropdown-item" id="logoutBtn">
                                         <i class="fas fa-sign-out-alt"></i>
@@ -75,244 +78,200 @@
     </header>
 
     <!-- Main Content -->
-    <main class="main">
-        <!-- Profile Header -->
-        <section class="profile-header">
-            <div class="profile-header-container">
-                <div class="profile-avatar">
-                    <div class="avatar-placeholder">
+    <main class="main profile-main">
+        <div class="profile-layout">
+            <!-- Sidebar -->
+            <aside class="profile-sidebar">
+                <div class="sidebar-header">
+                    <h2>Quản lý chức năng</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="sidebar-item active" data-section="profile">
                         <i class="fas fa-user"></i>
-                    </div>
-                    <button class="avatar-upload-btn" id="avatarUploadBtn">
-                        <i class="fas fa-camera"></i>
-                    </button>
-                </div>
-                <div class="profile-info">
-                    <h1 class="profile-name" id="profileName">Người dùng</h1>
-                    <p class="profile-email" id="profileEmail">user@example.com</p>
-                    <p class="profile-phone" id="profilePhone">0123456789</p>
-                    <div class="profile-badges">
-                        <span class="badge verified" id="verifiedBadge">
-                            <i class="fas fa-check-circle"></i>
-                            Đã xác thực
-                        </span>
-                        <span class="badge tenant">
-                            <i class="fas fa-home"></i>
-                            Người thuê trọ
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        Hồ sơ cá nhân
+                    </a>
+                    <a href="#" class="sidebar-item" data-section="rental-history">
+                        <i class="fas fa-history"></i>
+                        Lịch sử thuê trọ
+                    </a>
+                    <a href="#" class="sidebar-item" data-section="change-password">
+                        <i class="fas fa-key"></i>
+                        Đổi mật khẩu
+                    </a>
+                    <a href="request-status.html" class="sidebar-item">
+                        <i class="fas fa-clipboard-list"></i>
+                        Trạng thái yêu cầu
+                    </a>
+                    <a href="messages.html" class="sidebar-item">
+                        <i class="fas fa-envelope"></i>
+                        Tin nhắn
+                    </a>
+                </nav>
+            </aside>
 
-        <!-- Profile Content -->
-        <section class="profile-content">
-            <div class="profile-container">
-                <div class="profile-tabs">
-                    <button class="tab-btn active" data-tab="personal">
-                        <i class="fas fa-user"></i>
-                        Thông tin cá nhân
-                    </button>
-                    <button class="tab-btn" data-tab="preferences">
-                        <i class="fas fa-cog"></i>
-                        Tùy chọn tìm phòng
-                    </button>
-                    <button class="tab-btn" data-tab="security">
-                        <i class="fas fa-shield-alt"></i>
-                        Bảo mật
-                    </button>
-                </div>
-
-                <div class="profile-tab-content">
-                    <!-- Personal Information Tab -->
-                    <div class="tab-panel active" id="personal-tab">
-                        <div class="profile-card">
-                            <div class="card-header">
-                                <h3>Thông tin cá nhân</h3>
-                                <button class="btn btn-outline" id="editPersonalBtn">
-                                    <i class="fas fa-edit"></i>
-                                    Chỉnh sửa
-                                </button>
-                            </div>
-                            <div class="card-content">
-                                <form class="profile-form" id="personalForm">
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="fullName">Họ và tên</label>
-                                            <input type="text" id="fullName" name="fullName" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" id="email" name="email" readonly>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="phone">Số điện thoại</label>
-                                            <input type="tel" id="phone" name="phone" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="dateOfBirth">Ngày sinh</label>
-                                            <input type="date" id="dateOfBirth" name="dateOfBirth" readonly>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="gender">Giới tính</label>
-                                            <select id="gender" name="gender" disabled>
-                                                <option value="">Chọn giới tính</option>
-                                                <option value="male">Nam</option>
-                                                <option value="female">Nữ</option>
-                                                <option value="other">Khác</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="address">Địa chỉ</label>
-                                        <div class="address-fields">
-                                            <input type="text" id="street" name="street" placeholder="Số nhà, tên đường" readonly>
-                                            <input type="text" id="ward" name="ward" placeholder="Phường/Xã" readonly>
-                                            <input type="text" id="district" name="district" placeholder="Quận/Huyện" readonly>
-                                            <input type="text" id="city" name="city" placeholder="Thành phố" readonly>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="emergencyContact">Liên hệ khẩn cấp</label>
-                                        <div class="emergency-contact-fields">
-                                            <input type="text" id="emergencyName" name="emergencyName" placeholder="Họ và tên" readonly>
-                                            <input type="tel" id="emergencyPhone" name="emergencyPhone" placeholder="Số điện thoại" readonly>
-                                            <input type="text" id="emergencyRelationship" name="emergencyRelationship" placeholder="Mối quan hệ" readonly>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-actions" id="personalFormActions" style="display: none;">
-                                        <button type="button" class="btn btn-outline" id="cancelPersonalBtn">Hủy</button>
-                                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                                    </div>
-                                </form>
-                            </div>
+            <!-- Main Content Area -->
+            <div class="profile-content-area">
+                <!-- Profile Header -->
+                <div class="profile-header-section">
+                    <div class="profile-avatar">
+                        <div class="avatar-placeholder">
+                            <span>Avatar</span>
                         </div>
                     </div>
+                    <div class="profile-info">
+                        <h1 class="profile-name" id="profileName">Trần Văn Nhân</h1>
+                        <p class="profile-email" id="profileEmail">tranvannhan@example.com</p>
+                    </div>
+                </div>
 
-                    <!-- Preferences Tab -->
-                    <div class="tab-panel" id="preferences-tab">
-                        <div class="profile-card">
-                            <div class="card-header">
-                                <h3>Tùy chọn tìm phòng</h3>
-                                <button class="btn btn-outline" id="editPreferencesBtn">
-                                    <i class="fas fa-edit"></i>
-                                    Chỉnh sửa
-                                </button>
+                <!-- Profile Form -->
+                <div class="profile-form-section" id="profile-section">
+                    <form class="profile-form" id="personalForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Họ và tên</label>
+                                <input type="text" id="fullName" name="fullName" value="Trần Văn Nhân">
                             </div>
-                            <div class="card-content">
-                                <form class="profile-form" id="preferencesForm">
-                                    <div class="form-group">
-                                        <label for="budgetRange">Ngân sách (VNĐ/tháng)</label>
-                                        <div class="budget-range">
-                                            <input type="number" id="budgetMin" name="budgetMin" placeholder="Tối thiểu" readonly>
-                                            <span>đến</span>
-                                            <input type="number" id="budgetMax" name="budgetMax" placeholder="Tối đa" readonly>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="roomType">Loại phòng</label>
-                                        <select id="roomType" name="roomType" disabled>
-                                            <option value="">Chọn loại phòng</option>
-                                            <option value="single">Phòng đơn</option>
-                                            <option value="shared">Phòng chung</option>
-                                            <option value="studio">Studio</option>
-                                            <option value="apartment">Căn hộ</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="locations">Địa điểm ưa thích</label>
-                                        <div class="location-tags" id="locationTags">
-                                            <!-- Location tags will be added here -->
-                                        </div>
-                                        <input type="text" id="locationInput" placeholder="Thêm địa điểm..." readonly>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label>Tiện ích cần thiết</label>
-                                        <div class="amenities-grid">
-                                            <label class="amenity-item">
-                                                <input type="checkbox" name="amenities" value="wifi" disabled>
-                                                <span><i class="fas fa-wifi"></i> Wifi</span>
-                                            </label>
-                                            <label class="amenity-item">
-                                                <input type="checkbox" name="amenities" value="air_conditioner" disabled>
-                                                <span><i class="fas fa-snowflake"></i> Điều hòa</span>
-                                            </label>
-                                            <label class="amenity-item">
-                                                <input type="checkbox" name="amenities" value="refrigerator" disabled>
-                                                <span><i class="fas fa-refrigerator"></i> Tủ lạnh</span>
-                                            </label>
-                                            <label class="amenity-item">
-                                                <input type="checkbox" name="amenities" value="washing_machine" disabled>
-                                                <span><i class="fas fa-tshirt"></i> Máy giặt</span>
-                                            </label>
-                                            <label class="amenity-item">
-                                                <input type="checkbox" name="amenities" value="kitchen" disabled>
-                                                <span><i class="fas fa-utensils"></i> Bếp</span>
-                                            </label>
-                                            <label class="amenity-item">
-                                                <input type="checkbox" name="amenities" value="parking" disabled>
-                                                <span><i class="fas fa-car"></i> Chỗ đỗ xe</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-actions" id="preferencesFormActions" style="display: none;">
-                                        <button type="button" class="btn btn-outline" id="cancelPreferencesBtn">Hủy</button>
-                                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                                    </div>
-                                </form>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="tranvannhan@example.com" disabled>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Security Tab -->
-                    <div class="tab-panel" id="security-tab">
-                        <div class="profile-card">
-                            <div class="card-header">
-                                <h3>Bảo mật tài khoản</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dateOfBirth">Ngày sinh</label>
+                                <input type="text" id="dateOfBirth" name="dateOfBirth" placeholder="dd/mm/yyyy">
                             </div>
-                            <div class="card-content">
-                                <div class="security-options">
-                                    <div class="security-item">
-                                        <div class="security-info">
-                                            <h4>Đổi mật khẩu</h4>
-                                            <p>Cập nhật mật khẩu để bảo mật tài khoản</p>
-                                        </div>
-                                        <button class="btn btn-outline" id="changePasswordBtn">
-                                            <i class="fas fa-key"></i>
-                                            Đổi mật khẩu
-                                        </button>
-                                    </div>
-                                    
-                                    <div class="security-item">
-                                        <div class="security-info">
-                                            <h4>Xóa tài khoản</h4>
-                                            <p>Vô hiệu hóa tài khoản vĩnh viễn</p>
-                                        </div>
-                                        <button class="btn btn-danger" id="deleteAccountBtn">
-                                            <i class="fas fa-trash"></i>
-                                            Xóa tài khoản
-                                        </button>
-                                    </div>
+                            <div class="form-group">
+                                <label for="phone">Số điện thoại</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" id="address" name="address" placeholder="Nhập địa chỉ của bạn">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Cập nhật hồ sơ</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Rental History Section -->
+                <div class="rental-history-section" id="rental-history">
+                    <div class="section-header">
+                        <h2>Lịch sử thuê trọ</h2>
+                    </div>
+                    
+                    <div class="rental-cards-container">
+                        <!-- Rental Card 1 -->
+                        <div class="rental-card">
+                            <div class="rental-card-left">
+                                <div class="room-number-box">
+                                    <span class="room-number">Phòng 1</span>
+                                </div>
+                            </div>
+                            <div class="rental-card-right">
+                                <div class="rental-info">
+                                    <h3 class="rental-title">Phòng trọ tại Quận 1</h3>
+                                    <p class="rental-address">Địa chỉ: 123 Nguyễn Văn Cừ, Quận 1, TP. Hồ Chí Minh</p>
+                                    <p class="rental-period">Thời gian thuê: 01/01/2023 - 31/12/2023</p>
+                                </div>
+                                <div class="rental-status">
+                                    <span class="status-badge status-ended">Đã kết thúc</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rental Card 2 -->
+                        <div class="rental-card">
+                            <div class="rental-card-left">
+                                <div class="room-number-box">
+                                    <span class="room-number">Phòng 2</span>
+                                </div>
+                            </div>
+                            <div class="rental-card-right">
+                                <div class="rental-info">
+                                    <h3 class="rental-title">Phòng trọ tại Thủ Đức</h3>
+                                    <p class="rental-address">Địa chỉ: 456 Võ Văn Ngân, Thủ Đức, TP. Hồ Chí Minh</p>
+                                    <p class="rental-period">Thời gian thuê: 15/05/2024 - Hiện tại</p>
+                                </div>
+                                <div class="rental-status">
+                                    <span class="status-badge status-active">Đang thuê</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rental Card 3 -->
+                        <div class="rental-card">
+                            <div class="rental-card-left">
+                                <div class="room-number-box">
+                                    <span class="room-number">Phòng 3</span>
+                                </div>
+                            </div>
+                            <div class="rental-card-right">
+                                <div class="rental-info">
+                                    <h3 class="rental-title">Phòng trọ tại Bình Thạnh</h3>
+                                    <p class="rental-address">Địa chỉ: 789 Điện Biên Phủ, Bình Thạnh, TP. Hồ Chí Minh</p>
+                                    <p class="rental-period">Thời gian thuê: 01/03/2022 - 28/02/2023</p>
+                                </div>
+                                <div class="rental-status">
+                                    <span class="status-badge status-ended">Đã kết thúc</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rental Card 4 -->
+                        <div class="rental-card">
+                            <div class="rental-card-left">
+                                <div class="room-number-box">
+                                    <span class="room-number">Phòng 4</span>
+                                </div>
+                            </div>
+                            <div class="rental-card-right">
+                                <div class="rental-info">
+                                    <h3 class="rental-title">Phòng trọ tại Quận 7</h3>
+                                    <p class="rental-address">Địa chỉ: 321 Nguyễn Thị Thập, Quận 7, TP. Hồ Chí Minh</p>
+                                    <p class="rental-period">Thời gian thuê: 10/08/2024 - Hiện tại</p>
+                                </div>
+                                <div class="rental-status">
+                                    <span class="status-badge status-active">Đang thuê</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Change Password Section -->
+                <div class="change-password-section" id="change-password">
+                    <div class="password-card">
+                        <div class="password-header">
+                            <h2>Đổi mật khẩu</h2>
+                        </div>
+                        <form class="password-form" id="changePasswordForm">
+                            <div class="form-group">
+                                <label for="currentPassword">Mật khẩu hiện tại</label>
+                                <input type="password" id="currentPassword" name="currentPassword" placeholder="Nhập mật khẩu hiện tại" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">Mật khẩu mới</label>
+                                <input type="password" id="newPassword" name="newPassword" placeholder="Nhập mật khẩu mới" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmNewPassword">Xác nhận mật khẩu mới</label>
+                                <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Nhập lại mật khẩu mới" required>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Cập nhật mật khẩu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <!-- Change Password Modal -->
@@ -460,349 +419,560 @@
                 this.bindEvents();
             }
 
-            async loadUserProfile() {
-                try {
-                    const response = await fetch('/api/user/profile', {
-                        headers: {
-                            'Authorization': `Bearer ${this.token}`
-                        }
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        this.user = data.data.user;
-                        this.displayUserProfile();
-                    } else {
-                        throw new Error('Failed to load profile');
-                    }
-                } catch (error) {
-                    console.error('Error loading profile:', error);
-                    alert('Không thể tải thông tin hồ sơ');
-                }
-            }
-
-            displayUserProfile() {
-                // Update header info
-                document.getElementById('profileName').textContent = this.user.fullName || 'Người dùng';
-                document.getElementById('profileEmail').textContent = this.user.email || '';
-                document.getElementById('profilePhone').textContent = this.user.phone || '';
-
-                // Update verification badge
-                const verifiedBadge = document.getElementById('verifiedBadge');
-                if (this.user.isVerified) {
-                    verifiedBadge.style.display = 'inline-flex';
-                } else {
-                    verifiedBadge.style.display = 'none';
-                }
-
-                // Update personal form
-                document.getElementById('fullName').value = this.user.fullName || '';
-                document.getElementById('email').value = this.user.email || '';
-                document.getElementById('phone').value = this.user.phone || '';
-                document.getElementById('dateOfBirth').value = this.user.dateOfBirth ? this.user.dateOfBirth.split('T')[0] : '';
-                document.getElementById('gender').value = this.user.gender || '';
-
-                // Update address
-                if (this.user.address) {
-                    document.getElementById('street').value = this.user.address.street || '';
-                    document.getElementById('ward').value = this.user.address.ward || '';
-                    document.getElementById('district').value = this.user.address.district || '';
-                    document.getElementById('city').value = this.user.address.city || '';
-                }
-
-                // Update emergency contact
-                if (this.user.emergencyContact) {
-                    document.getElementById('emergencyName').value = this.user.emergencyContact.name || '';
-                    document.getElementById('emergencyPhone').value = this.user.emergencyContact.phone || '';
-                    document.getElementById('emergencyRelationship').value = this.user.emergencyContact.relationship || '';
-                }
-
-                // Update preferences
-                if (this.user.preferences) {
-                    if (this.user.preferences.budget) {
-                        document.getElementById('budgetMin').value = this.user.preferences.budget.min || '';
-                        document.getElementById('budgetMax').value = this.user.preferences.budget.max || '';
-                    }
-                    document.getElementById('roomType').value = this.user.preferences.roomType || '';
-
-                    // Update location tags
-                    this.updateLocationTags(this.user.preferences.location || []);
-
-                    // Update amenities
-                    if (this.user.preferences.amenities) {
-                        document.querySelectorAll('input[name="amenities"]').forEach(checkbox => {
-                            checkbox.checked = this.user.preferences.amenities.includes(checkbox.value);
-                        });
-                    }
-                }
-            }
-
-            updateLocationTags(locations) {
-                const locationTags = document.getElementById('locationTags');
-                locationTags.innerHTML = '';
+            loadUserProfile() {
+                // Load from localStorage for demo mode
+                const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+                const pendingRegistration = JSON.parse(localStorage.getItem('pendingRegistration') || '{}');
                 
-                locations.forEach(location => {
-                    const tag = document.createElement('span');
-                    tag.className = 'location-tag';
-                    tag.innerHTML = `
-                        ${location}
-                        <button type="button" class="remove-tag" data-location="${location}">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    `;
-                    locationTags.appendChild(tag);
-                });
+                // Use userInfo first, then fallback to pendingRegistration
+                const userData = Object.keys(userInfo).length > 0 ? userInfo : pendingRegistration;
+                
+                this.displayUserProfile(userData);
+            }
+
+            displayUserProfile(userData) {
+                // Update header info
+                const displayName = userData.fullName || 'Trần Văn Nhân';
+                const displayEmail = userData.email || 'tranvannhan@example.com';
+                
+                document.getElementById('profileName').textContent = displayName;
+                document.getElementById('profileEmail').textContent = displayEmail;
+
+                // Update form fields
+                document.getElementById('fullName').value = displayName;
+                document.getElementById('email').value = displayEmail;
+                document.getElementById('phone').value = userData.phone || '';
+                document.getElementById('dateOfBirth').value = userData.dateOfBirth || '';
+                document.getElementById('address').value = userData.address || '';
             }
 
             bindEvents() {
-                // Tab switching
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const tabName = e.currentTarget.dataset.tab;
-                        this.switchTab(tabName);
-                    });
-                });
-
-                // Edit buttons
-                document.getElementById('editPersonalBtn').addEventListener('click', () => {
-                    this.toggleEditMode('personal', true);
-                });
-
-                document.getElementById('editPreferencesBtn').addEventListener('click', () => {
-                    this.toggleEditMode('preferences', true);
-                });
-
-                // Cancel buttons
-                document.getElementById('cancelPersonalBtn').addEventListener('click', () => {
-                    this.toggleEditMode('personal', false);
-                    this.displayUserProfile(); // Reload original data
-                });
-
-                document.getElementById('cancelPreferencesBtn').addEventListener('click', () => {
-                    this.toggleEditMode('preferences', false);
-                    this.displayUserProfile(); // Reload original data
-                });
-
-                // Form submissions
+                // Form submission
                 document.getElementById('personalForm').addEventListener('submit', (e) => {
                     e.preventDefault();
                     this.updatePersonalInfo();
                 });
-
-                document.getElementById('preferencesForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.updatePreferences();
-                });
-
-                // Security buttons
-                document.getElementById('changePasswordBtn').addEventListener('click', () => {
-                    this.showChangePasswordModal();
-                });
-
-                document.getElementById('deleteAccountBtn').addEventListener('click', () => {
-                    this.showDeleteAccountConfirm();
-                });
-
-                // Change password modal
-                document.getElementById('closePasswordModal').addEventListener('click', () => {
-                    this.hideChangePasswordModal();
-                });
-
-                document.getElementById('cancelPasswordBtn').addEventListener('click', () => {
-                    this.hideChangePasswordModal();
-                });
-
-                document.getElementById('changePasswordForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.changePassword();
-                });
             }
 
-            switchTab(tabName) {
-                // Update tab buttons
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-
-                // Update tab panels
-                document.querySelectorAll('.tab-panel').forEach(panel => {
-                    panel.classList.remove('active');
-                });
-                document.getElementById(`${tabName}-tab`).classList.add('active');
-            }
-
-            toggleEditMode(formType, isEdit) {
-                const form = document.getElementById(`${formType}Form`);
-                const inputs = form.querySelectorAll('input, select, textarea');
-                const actions = document.getElementById(`${formType}FormActions`);
-
-                inputs.forEach(input => {
-                    input.readOnly = !isEdit;
-                    input.disabled = !isEdit;
-                });
-
-                if (isEdit) {
-                    actions.style.display = 'flex';
-                } else {
-                    actions.style.display = 'none';
-                }
-            }
-
-            async updatePersonalInfo() {
+            updatePersonalInfo() {
                 try {
                     const formData = new FormData(document.getElementById('personalForm'));
-                    const data = {
+                    const updatedData = {
                         fullName: formData.get('fullName'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
                         dateOfBirth: formData.get('dateOfBirth'),
-                        gender: formData.get('gender'),
-                        address: {
-                            street: formData.get('street'),
-                            ward: formData.get('ward'),
-                            district: formData.get('district'),
-                            city: formData.get('city')
-                        },
-                        emergencyContact: {
-                            name: formData.get('emergencyName'),
-                            phone: formData.get('emergencyPhone'),
-                            relationship: formData.get('emergencyRelationship')
-                        }
+                        address: formData.get('address')
                     };
 
-                    const response = await fetch('/api/user/profile', {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `Bearer ${this.token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
+                    // Update localStorage
+                    const currentUserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+                    const updatedUserInfo = { ...currentUserInfo, ...updatedData };
+                    localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
 
-                    if (response.ok) {
-                        alert('Cập nhật thông tin thành công!');
-                        this.toggleEditMode('personal', false);
-                        await this.loadUserProfile();
-                    } else {
-                        throw new Error('Failed to update profile');
-                    }
+                    // Update pendingRegistration as well
+                    const currentPending = JSON.parse(localStorage.getItem('pendingRegistration') || '{}');
+                    const updatedPending = { ...currentPending, ...updatedData };
+                    localStorage.setItem('pendingRegistration', JSON.stringify(updatedPending));
+
+                    alert('Cập nhật hồ sơ thành công!');
+                    
+                    // Update display
+                    this.displayUserProfile(updatedUserInfo);
+                    
                 } catch (error) {
                     console.error('Error updating profile:', error);
                     alert('Không thể cập nhật thông tin');
-                }
-            }
-
-            async updatePreferences() {
-                try {
-                    const formData = new FormData(document.getElementById('preferencesForm'));
-                    const amenities = Array.from(document.querySelectorAll('input[name="amenities"]:checked'))
-                        .map(checkbox => checkbox.value);
-
-                    const data = {
-                        budget: {
-                            min: parseInt(formData.get('budgetMin')) || null,
-                            max: parseInt(formData.get('budgetMax')) || null
-                        },
-                        roomType: formData.get('roomType'),
-                        amenities: amenities
-                    };
-
-                    const response = await fetch('/api/user/preferences', {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `Bearer ${this.token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-
-                    if (response.ok) {
-                        alert('Cập nhật tùy chọn thành công!');
-                        this.toggleEditMode('preferences', false);
-                        await this.loadUserProfile();
-                    } else {
-                        throw new Error('Failed to update preferences');
-                    }
-                } catch (error) {
-                    console.error('Error updating preferences:', error);
-                    alert('Không thể cập nhật tùy chọn');
-                }
-            }
-
-            showChangePasswordModal() {
-                document.getElementById('changePasswordModal').style.display = 'flex';
-            }
-
-            hideChangePasswordModal() {
-                document.getElementById('changePasswordModal').style.display = 'none';
-                document.getElementById('changePasswordForm').reset();
-            }
-
-            async changePassword() {
-                try {
-                    const formData = new FormData(document.getElementById('changePasswordForm'));
-                    const data = {
-                        currentPassword: formData.get('currentPassword'),
-                        newPassword: formData.get('newPassword'),
-                        confirmNewPassword: formData.get('confirmNewPassword')
-                    };
-
-                    if (data.newPassword !== data.confirmNewPassword) {
-                        alert('Xác nhận mật khẩu không khớp!');
-                        return;
-                    }
-
-                    const response = await fetch('/api/auth/change-password', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${this.token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-
-                    if (response.ok) {
-                        alert('Đổi mật khẩu thành công!');
-                        this.hideChangePasswordModal();
-                    } else {
-                        const errorData = await response.json();
-                        alert(errorData.message || 'Không thể đổi mật khẩu');
-                    }
-                } catch (error) {
-                    console.error('Error changing password:', error);
-                    alert('Không thể đổi mật khẩu');
-                }
-            }
-
-            showDeleteAccountConfirm() {
-                if (confirm('Bạn có chắc chắn muốn xóa tài khoản? Hành động này không thể hoàn tác!')) {
-                    this.deleteAccount();
-                }
-            }
-
-            async deleteAccount() {
-                try {
-                    const response = await fetch('/api/user/account', {
-                        method: 'DELETE',
-                        headers: {
-                            'Authorization': `Bearer ${this.token}`
-                        }
-                    });
-
-                    if (response.ok) {
-                        alert('Tài khoản đã được xóa thành công!');
-                        authManager.logout();
-                    } else {
-                        throw new Error('Failed to delete account');
-                    }
-                } catch (error) {
-                    console.error('Error deleting account:', error);
-                    alert('Không thể xóa tài khoản');
                 }
             }
         }
 
         // Initialize profile manager
         const profileManager = new ProfileManager();
+
+        // Section navigation
+        class SectionManager {
+            constructor() {
+                this.currentSection = 'profile';
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.showSection('profile'); // Show profile section by default
+            }
+
+            bindEvents() {
+                const sidebarItems = document.querySelectorAll('.sidebar-item[data-section]');
+                
+                sidebarItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const section = item.getAttribute('data-section');
+                        this.showSection(section);
+                        this.updateActiveSidebarItem(item);
+                    });
+                });
+            }
+
+            showSection(sectionName) {
+                // Hide all sections
+                const profileSection = document.getElementById('profile-section');
+                const rentalHistorySection = document.getElementById('rental-history');
+                const changePasswordSection = document.getElementById('change-password');
+                
+                // Hide all sections first
+                profileSection.style.display = 'none';
+                rentalHistorySection.style.display = 'none';
+                changePasswordSection.style.display = 'none';
+                
+                // Show selected section
+                if (sectionName === 'profile') {
+                    profileSection.style.display = 'block';
+                } else if (sectionName === 'rental-history') {
+                    rentalHistorySection.style.display = 'block';
+                } else if (sectionName === 'change-password') {
+                    changePasswordSection.style.display = 'block';
+                }
+                
+                this.currentSection = sectionName;
+            }
+
+            updateActiveSidebarItem(activeItem) {
+                // Remove active class from all sidebar items
+                document.querySelectorAll('.sidebar-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                activeItem.classList.add('active');
+            }
+        }
+
+        // Initialize section manager
+        const sectionManager = new SectionManager();
+
+        // Password management
+        class PasswordManager {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                const passwordForm = document.getElementById('changePasswordForm');
+                if (passwordForm) {
+                    passwordForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.handlePasswordChange();
+                    });
+                }
+
+                // Real-time password validation
+                const newPasswordInput = document.getElementById('newPassword');
+                const confirmPasswordInput = document.getElementById('confirmNewPassword');
+                
+                if (newPasswordInput) {
+                    newPasswordInput.addEventListener('input', () => {
+                        this.validatePasswordStrength(newPasswordInput.value);
+                    });
+                }
+
+                if (confirmPasswordInput) {
+                    confirmPasswordInput.addEventListener('input', () => {
+                        this.validatePasswordMatch();
+                    });
+                }
+            }
+
+            validatePasswordStrength(password) {
+                // Simple password strength validation
+                let strength = 'weak';
+                if (password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+                    strength = 'strong';
+                } else if (password.length >= 6) {
+                    strength = 'medium';
+                }
+
+                // You can add a visual strength indicator here if needed
+                return strength;
+            }
+
+            validatePasswordMatch() {
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmNewPassword').value;
+                const confirmInput = document.getElementById('confirmNewPassword');
+                
+                if (confirmPassword && newPassword !== confirmPassword) {
+                    this.showFieldError(confirmInput, 'Mật khẩu xác nhận không khớp');
+                    return false;
+                } else {
+                    this.clearFieldError(confirmInput);
+                    return true;
+                }
+            }
+
+            showFieldError(input, message) {
+                const formGroup = input.closest('.form-group');
+                formGroup.classList.add('error');
+                
+                // Remove existing error message
+                const existingError = formGroup.querySelector('.error-message');
+                if (existingError) {
+                    existingError.remove();
+                }
+                
+                // Add new error message
+                const errorElement = document.createElement('span');
+                errorElement.className = 'error-message';
+                errorElement.textContent = message;
+                input.parentNode.appendChild(errorElement);
+            }
+
+            clearFieldError(input) {
+                const formGroup = input.closest('.form-group');
+                formGroup.classList.remove('error');
+                
+                const errorMessage = formGroup.querySelector('.error-message');
+                if (errorMessage) {
+                    errorMessage.remove();
+                }
+            }
+
+            handlePasswordChange() {
+                const formData = new FormData(document.getElementById('changePasswordForm'));
+                const currentPassword = formData.get('currentPassword');
+                const newPassword = formData.get('newPassword');
+                const confirmPassword = formData.get('confirmNewPassword');
+
+                // Validation
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    alert('Vui lòng điền đầy đủ thông tin');
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    alert('Mật khẩu xác nhận không khớp');
+                    return;
+                }
+
+                if (newPassword.length < 6) {
+                    alert('Mật khẩu mới phải có ít nhất 6 ký tự');
+                    return;
+                }
+
+                // Simulate API call
+                this.updatePassword(currentPassword, newPassword);
+            }
+
+            async updatePassword(currentPassword, newPassword) {
+                try {
+                    // Show loading state
+                    const submitBtn = document.querySelector('#changePasswordForm .btn');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Đang cập nhật...';
+                    submitBtn.disabled = true;
+
+                    // Simulate API call delay
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+
+                    // For demo purposes, we'll just show success
+                    // In real implementation, you would call your API here
+                    alert('Đổi mật khẩu thành công!');
+                    
+                    // Reset form
+                    document.getElementById('changePasswordForm').reset();
+                    
+                    // Reset button
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+
+                } catch (error) {
+                    console.error('Password update error:', error);
+                    alert('Có lỗi xảy ra khi đổi mật khẩu. Vui lòng thử lại.');
+                    
+                    // Reset button
+                    const submitBtn = document.querySelector('#changePasswordForm .btn');
+                    submitBtn.textContent = 'Cập nhật mật khẩu';
+                    submitBtn.disabled = false;
+                }
+            }
+        }
+
+        // Initialize password manager
+        const passwordManager = new PasswordManager();
+
+        // Search functionality (same as home.html)
+        class PropertySearch {
+            constructor() {
+                this.properties = [
+                    {
+                        id: 1,
+                        title: "Phòng Trọ 1",
+                        subtitle: "Phòng trọ Quận 1 - Giá tốt",
+                        address: "123 Đường Nguyễn Trãi, Quận 1, TP.HCM",
+                        price: "3.500.000",
+                        rooms: 1,
+                        phone: "0912-345-678",
+                        district: "Quận 1",
+                        priceRange: "3000000-4000000"
+                    },
+                    {
+                        id: 2,
+                        title: "Phòng Trọ 2",
+                        subtitle: "Căn hộ mini thoáng mát",
+                        address: "456 Đường Lê Lợi, Quận 2, TP.HCM",
+                        price: "5.000.000",
+                        rooms: 1,
+                        phone: "0987-654-321",
+                        district: "Quận 2",
+                        priceRange: "4000000-6000000"
+                    },
+                    {
+                        id: 3,
+                        title: "Phòng Trọ 3",
+                        subtitle: "Phòng trọ gần đại học",
+                        address: "789 Đường 3/2, Quận 10, TP.HCM",
+                        price: "2.800.000",
+                        rooms: 1,
+                        phone: "0901-234-567",
+                        district: "Quận 10",
+                        priceRange: "2000000-3000000"
+                    },
+                    {
+                        id: 4,
+                        title: "Phòng Trọ 4",
+                        subtitle: "Phòng trọ đầy đủ tiện nghi",
+                        address: "321 Đường Võ Văn Tần, Quận 3, TP.HCM",
+                        price: "4.200.000",
+                        rooms: 1,
+                        phone: "0923-456-789",
+                        district: "Quận 3",
+                        priceRange: "4000000-5000000"
+                    },
+                    {
+                        id: 5,
+                        title: "Phòng Trọ 5",
+                        subtitle: "Phòng trọ giá rẻ",
+                        address: "654 Đường Cách Mạng Tháng 8, Quận 10, TP.HCM",
+                        price: "2.200.000",
+                        rooms: 1,
+                        phone: "0934-567-890",
+                        district: "Quận 10",
+                        priceRange: "2000000-3000000"
+                    },
+                    {
+                        id: 6,
+                        title: "Phòng Trọ 6",
+                        subtitle: "Phòng trọ cao cấp",
+                        address: "987 Đường Nguyễn Huệ, Quận 1, TP.HCM",
+                        price: "6.500.000",
+                        rooms: 1,
+                        phone: "0945-678-901",
+                        district: "Quận 1",
+                        priceRange: "6000000-7000000"
+                    }
+                ];
+                this.init();
+            }
+
+            init() {
+                this.createSearchModal();
+                this.bindEvents();
+            }
+
+            createSearchModal() {
+                const modal = document.createElement('div');
+                modal.className = 'search-modal';
+                modal.id = 'searchModal';
+                modal.innerHTML = `
+                    <div class="search-modal-overlay">
+                        <div class="search-modal-content">
+                            <div class="search-modal-header">
+                                <h3>Tìm kiếm phòng trọ</h3>
+                                <button class="search-modal-close" id="closeSearchModal">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="search-modal-body">
+                                <div class="search-filters">
+                                    <div class="filter-group">
+                                        <label for="searchKeyword">Từ khóa</label>
+                                        <input type="text" id="searchKeyword" placeholder="Nhập từ khóa tìm kiếm...">
+                                    </div>
+                                    <div class="filter-group">
+                                        <label for="searchDistrict">Quận/Huyện</label>
+                                        <select id="searchDistrict">
+                                            <option value="">Tất cả quận</option>
+                                            <option value="Quận 1">Quận 1</option>
+                                            <option value="Quận 2">Quận 2</option>
+                                            <option value="Quận 3">Quận 3</option>
+                                            <option value="Quận 10">Quận 10</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label for="searchPrice">Mức giá</label>
+                                        <select id="searchPrice">
+                                            <option value="">Tất cả mức giá</option>
+                                            <option value="2000000-3000000">Dưới 3 triệu</option>
+                                            <option value="3000000-4000000">3 - 4 triệu</option>
+                                            <option value="4000000-5000000">4 - 5 triệu</option>
+                                            <option value="5000000-6000000">5 - 6 triệu</option>
+                                            <option value="6000000-7000000">Trên 6 triệu</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-actions">
+                                        <button class="btn btn-outline" id="clearFilters">Xóa bộ lọc</button>
+                                        <button class="btn btn-primary" id="searchProperties">Tìm kiếm</button>
+                                    </div>
+                                </div>
+                                <div class="search-results" id="searchResults">
+                                    <div class="no-results" style="display: none;">
+                                        <i class="fas fa-search"></i>
+                                        <p>Không tìm thấy phòng trọ phù hợp</p>
+                                    </div>
+                                    <div class="results-grid" id="resultsGrid">
+                                        <!-- Results will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+
+            bindEvents() {
+                // Open search modal
+                document.getElementById('searchBtn').addEventListener('click', () => {
+                    document.getElementById('searchModal').style.display = 'flex';
+                });
+
+                // Close search modal
+                document.getElementById('closeSearchModal').addEventListener('click', () => {
+                    this.closeModal();
+                });
+
+                // Close on overlay click
+                document.querySelector('.search-modal-overlay').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('search-modal-overlay')) {
+                        this.closeModal();
+                    }
+                });
+
+                // Search functionality
+                document.getElementById('searchProperties').addEventListener('click', () => {
+                    this.performSearch();
+                });
+
+                // Clear filters
+                document.getElementById('clearFilters').addEventListener('click', () => {
+                    this.clearFilters();
+                });
+
+                // Enter key search
+                document.getElementById('searchKeyword').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.performSearch();
+                    }
+                });
+            }
+
+            closeModal() {
+                document.getElementById('searchModal').style.display = 'none';
+            }
+
+            performSearch() {
+                const keyword = document.getElementById('searchKeyword').value.toLowerCase();
+                const district = document.getElementById('searchDistrict').value;
+                const priceRange = document.getElementById('searchPrice').value;
+
+                let results = this.properties.filter(property => {
+                    let matches = true;
+
+                    // Keyword search
+                    if (keyword) {
+                        matches = matches && (
+                            property.title.toLowerCase().includes(keyword) ||
+                            property.subtitle.toLowerCase().includes(keyword) ||
+                            property.address.toLowerCase().includes(keyword) ||
+                            property.district.toLowerCase().includes(keyword)
+                        );
+                    }
+
+                    // District filter
+                    if (district) {
+                        matches = matches && property.district === district;
+                    }
+
+                    // Price filter
+                    if (priceRange) {
+                        matches = matches && property.priceRange === priceRange;
+                    }
+
+                    return matches;
+                });
+
+                this.displayResults(results);
+            }
+
+            displayResults(results) {
+                const resultsGrid = document.getElementById('resultsGrid');
+                const noResults = document.querySelector('.no-results');
+
+                if (results.length === 0) {
+                    resultsGrid.innerHTML = '';
+                    noResults.style.display = 'block';
+                    return;
+                }
+
+                noResults.style.display = 'none';
+                resultsGrid.innerHTML = results.map(property => `
+                    <div class="result-card">
+                        <div class="result-card-header">
+                            <h4>${property.title}</h4>
+                            <span class="result-price">${property.price} VNĐ/tháng</span>
+                        </div>
+                        <div class="result-card-body">
+                            <p class="result-subtitle">${property.subtitle}</p>
+                            <p class="result-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                ${property.address}
+                            </p>
+                            <div class="result-info">
+                                <span class="result-district">
+                                    <i class="fas fa-building"></i>
+                                    ${property.district}
+                                </span>
+                                <span class="result-phone">
+                                    <i class="fas fa-phone"></i>
+                                    ${property.phone}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="result-card-footer">
+                            <button class="btn btn-primary" onclick="alert('Liên hệ: ${property.phone}')">
+                                Liên hệ ngay
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            clearFilters() {
+                document.getElementById('searchKeyword').value = '';
+                document.getElementById('searchDistrict').value = '';
+                document.getElementById('searchPrice').value = '';
+                document.getElementById('resultsGrid').innerHTML = '';
+                document.querySelector('.no-results').style.display = 'none';
+            }
+        }
+
+        // Initialize search functionality
+        const propertySearch = new PropertySearch();
 
         // Mobile menu toggle
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
